@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Scan & Link Barcode{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Scan to Link Barcode with Location</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div>
+    <h2 class="text-lg font-semibold mb-2">Scan Barcode</h2>
+    <div id="barcode-reader" class="border rounded-md"></div>
+    <p class="mt-2">Scanned Barcode: <span id="barcode-result" class="font-mono text-blue-600"></span></p>
+  </div>
+  <div>
+    <h2 class="text-lg font-semibold mb-2">Scan Location (QR)</h2>
+    <div id="qr-reader" class="border rounded-md"></div>
+    <p class="mt-2">Scanned Location: <span id="qr-result" class="font-mono text-green-600"></span></p>
+  </div>
+</div>
+
+<form id="link-form" method="post" action="/link-scanned" class="hidden">
+  <input type="hidden" name="barcode" id="form-barcode">
+  <input type="hidden" name="location" id="form-location">
+</form>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+  let barcodeScanned = null;
+  let locationScanned = null;
+
+  function trySubmit() {
+    if (barcodeScanned && locationScanned) {
+      document.getElementById('form-barcode').value = barcodeScanned;
+      document.getElementById('form-location').value = locationScanned;
+      document.getElementById('link-form').submit();
+    }
+  }
+
+  new Html5QrcodeScanner("barcode-reader", { fps: 10, qrbox: 250 })
+    .render((decodedText) => {
+      barcodeScanned = decodedText;
+      document.getElementById("barcode-result").textContent = decodedText;
+      trySubmit();
+    });
+
+  new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 })
+    .render((decodedText) => {
+      locationScanned = decodedText;
+      document.getElementById("qr-result").textContent = decodedText;
+      trySubmit();
+    });
+</script>
+{% endblock %}
+

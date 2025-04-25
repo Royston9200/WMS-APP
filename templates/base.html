@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}WMS{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-fuchsia-100 text-fuchsia-900 min-h-screen">
+
+<nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <div class="text-xl font-bold text-fuchsia-600">MC Logistics</div>
+    <ul class="flex space-x-6 items-center">
+        <li><a href="/" class="hover:text-fuchsia-600">Dashboard</a></li>
+        <li><a href="/locations" class="hover:text-fuchsia-600">Locations</a></li>
+        <li><a href="/scan" class="hover:text-fuchsia-600">Scan</a></li>
+        {% if session.get('username') %}
+            <li class="font-semibold">Logged in as: {{ session['username'] }}</li>
+            <li><a href="/logout" class="hover:text-fuchsia-600">Logout</a></li>
+        {% else %}
+            <li><a href="/login" class="hover:text-fuchsia-600">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<main class="p-6">
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

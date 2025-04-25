@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Welcome {{ username }}!</h2>
+  <p>choose above a function like scanning or generating a barcode.</p>
+  <a href="{{ url_for('logout') }}">Log uit</a>
+{% endblock %}

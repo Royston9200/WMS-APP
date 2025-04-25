@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Location Management{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Location Management</h1>
+
+<form method="post" action="/locations" class="bg-white p-6 rounded shadow-md mb-6 max-w-xl">
+    <div class="mb-4">
+        <label for="location" class="block font-medium">Location Code</label>
+        <input type="text" name="location" id="location" class="mt-1 w-full border rounded px-3 py-2" placeholder="e.g. A-01-01" required>
+    </div>
+    <div class="mb-4">
+        <label for="barcode" class="block font-medium">Barcode</label>
+        <input type="text" name="barcode" id="barcode" class="mt-1 w-full border rounded px-3 py-2" placeholder="Scan or type barcode" required>
+    </div>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Assign Barcode</button>
+</form>
+
+<div class="bg-white p-6 rounded shadow-md max-w-xl">
+    <h2 class="text-xl font-semibold mb-4">Linked Barcodes</h2>
+    <ul class="space-y-2">
+        {% for code in barcodes %}
+        <li class="flex justify-between items-center border-b pb-2">
+            <span>{{ code }}</span>
+            <form method="post" action="/locations/remove" class="inline">
+                <input type="hidden" name="barcode" value="{{ code }}">
+                <button class="text-red-600 hover:underline" type="submit">Unlink</button>
+            </form>
+        </li>
+        {% else %}
+        <li class="text-gray-500">No barcodes linked to this location yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

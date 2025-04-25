@@ -1,0 +1,10 @@
+<h2>Login</h2>
+<form method="post">
+  <label>Gebruikersnaam: <input name="username" required></label><br>
+  <label>Wachtwoord: <input name="password" type="password" required></label><br>
+  <button type="submit">Login</button>
+  {% if error %}
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+    {{ error }}
+  </div>
+{% endif %}

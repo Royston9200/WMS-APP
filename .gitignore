@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+*.db
+instance/
+.vscode/
+logs.txt
+pending_user_inserts.sql
+*.png
+
