@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Mc-Logistics{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+<!-- Top bar -->
+<header class="bg-slate-800 text-slate-100">
+  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <!-- Brand (logo + naam) -->
+    <a href="{{ url_for('home') }}" class="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-white/40 rounded">
+      <img
+        src="{{ url_for('static', filename='logo_klein_2000.png') }}"
+        alt="MC Logistics"
+        class="h-7 w-7 object-contain bg-white rounded-md shadow-sm"
+      />
+      <span class="font-semibold tracking-wide">MC Logistics</span>
+    </a>
+
+    <!-- Nav -->
+    <nav class="flex items-center gap-6 text-sm">
+      <a href="{{ url_for('home') }}" class="hover:text-white/90">Dashboard</a>
+      <a href="{{ url_for('scan') }}" class="hover:text-white/90">Scan</a>
+      <a href="{{ url_for('locations') }}" class="hover:text-white/90">Locations</a>
+      <a href="{{ url_for('users') }}" class="hover:text-white/90">Users</a>
+
+      {% if session.get('username') %}
+        <span class="hidden sm:inline text-white/70">Ingelogd als {{ session['username'] }}</span>
+        <a href="{{ url_for('logout') }}"
+           class="px-3 py-1 rounded bg-indigo-500 hover:bg-indigo-400 text-white">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}"
+           class="px-3 py-1 rounded bg-indigo-500 hover:bg-indigo-400 text-white">Login</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+
+  <!-- Flash messages -->
+  <div class="max-w-6xl mx-auto px-4 mt-4 space-y-2">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        {% set cls = {
+          'success': 'bg-emerald-50 text-emerald-800 ring-emerald-200',
+          'error':   'bg-rose-50 text-rose-800 ring-rose-200',
+          'warning': 'bg-amber-50 text-amber-800 ring-amber-200',
+          'info':    'bg-blue-50 text-blue-800 ring-blue-200'
+        }[category] if category in ['success','error','warning','info'] else 'bg-blue-50 text-blue-800 ring-blue-200' %}
+        <div class="rounded-md px-4 py-2 ring-1 {{ cls }}">
+          <span class="font-medium capitalize">{{ category }}</span> · {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Page content -->
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="text-center text-xs text-slate-500 pb-6">© MC Logistics</footer>
+</body>
+</html>

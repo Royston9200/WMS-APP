@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}WMS — Home{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-6 max-w-3xl">
+  <h1 class="text-xl font-semibold mb-2">
+    Welcome, {{ first_name or username }}!
+  </h1>
+  <p class="text-slate-600 mb-4">
+    This is your Mc-Logistics home screen. Choose an action below.
+  </p>
+
+  <div class="flex gap-3">
+    <a class="px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-500"
+       href="{{ url_for('scan') }}">Open scanner</a>
+    <a class="px-4 py-2 rounded bg-slate-200 text-slate-900 hover:bg-slate-300"
+       href="{{ url_for('generate_barcode') }}">Generate sample barcode</a>
+  </div>
+</div>
+{% endblock %}

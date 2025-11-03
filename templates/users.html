@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}WMS — Users{% endblock %}
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-6">
+  <h2 class="text-lg font-semibold mb-4">Actieve gebruikers</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm">
+      <thead class="text-slate-600">
+        <tr class="border-b">
+          <th class="py-2 pr-4 text-left">ID</th>
+          <th class="py-2 pr-4 text-left">username</th>
+          <th class="py-2 pr-4 text-left">first_name</th>
+          <th class="py-2 pr-4 text-left">last_name</th>
+          <th class="py-2 pr-4 text-left">mobile_user</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr class="border-b last:border-0">
+          <td class="py-2 pr-4">{{ u.user_id }}</td>
+          <td class="py-2 pr-4">{{ u.username }}</td>
+          <td class="py-2 pr-4">{{ u.first_name }}</td>
+          <td class="py-2 pr-4">{{ u.last_name }}</td>
+          <td class="py-2 pr-4">{{ 'Ja' if u.mobile_user else 'Nee' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

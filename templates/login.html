@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in — WMS</title>
+  <link rel="icon" href="{{ url_for('static', filename='logo_klein_2000.png') }}">
+  <style>
+ 
+    :root{
+      --brand-bg: #0b2b4c;          /* primary background (navy) */
+      --brand:    #144a7b;          /* primary */
+      --brand-2:  #00a8e8;          /* accent / call-to-action */
+      --text:     #0e1116;          /* body text */
+      --muted:    #6b7280;          /* muted/secondary text */
+      --card:     #ffffff;          /* card background */
+      --error:    #b91c1c;          /* error red */
+      --ring:     rgba(0,168,232,0.35);
+      --shadow:   0 10px 25px rgba(0,0,0,0.15);
+      --radius:   14px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% -20%, #133555 0%, transparent 60%),
+        radial-gradient(1000px 500px at 110% 0%, #0f2743 0%, transparent 55%),
+        var(--brand-bg);
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    .card{
+      width: min(420px, 100%);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      border: 1px solid rgba(20,74,123,0.08);
+      animation: pop .25s ease-out;
+    }
+    @keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
+
+    .brand{
+      display:flex; align-items:center; gap:14px;
+      margin-bottom: 18px;
+    }
+    .brand img{
+      width:44px; height:44px; object-fit:contain; border-radius:10px;
+      background:#fff; box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+    }
+    .brand h1{
+      font-size: 20px; line-height: 1.2; margin:0; color:#0d1826; letter-spacing:.2px;
+    }
+    .subtitle{
+      margin: 0 0 18px 58px; color: var(--muted); font-size: 14px;
+    }
+
+    form{display:grid; gap:14px; margin-top: 8px;}
+    label{font-size:13px; color:#1f2937; margin-bottom:6px; display:block;}
+    .field{
+      display:flex; flex-direction:column;
+    }
+    input{
+      width:100%; height:44px; border-radius:10px;
+      border:1px solid #e5e7eb; padding: 10px 12px; font-size:14px;
+      outline: none; background:#fff;
+      transition: border .15s, box-shadow .15s, transform .02s;
+    }
+    input:focus{
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+    .actions{margin-top: 4px; display:grid; gap:10px}
+    button{
+      height:46px; border-radius:12px; border:none;
+      background: linear-gradient(180deg, var(--brand-2), #0496cf);
+      color:#fff; font-weight:600; font-size:15px; letter-spacing:.2px;
+      cursor:pointer; box-shadow: 0 6px 14px rgba(0,168,232,0.35);
+      transition: transform .04s ease, filter .15s ease;
+    }
+    button:hover{filter:brightness(1.02)}
+    button:active{transform: translateY(1px)}
+
+    .error{
+      margin-top:6px; padding:10px 12px; border-radius:10px;
+      background: #fee2e2; color:#7f1d1d; border:1px solid #fecaca;
+      font-size: 13px;
+    }
+
+    .footer{
+      margin-top:12px; font-size:12px; color:var(--muted); text-align:center;
+    }
+
+    .hint{
+      display:flex; justify-content:space-between; align-items:center;
+      margin-top:2px; font-size:12px; color:var(--muted);
+    }
+    .link{
+      color: var(--brand-2); text-decoration:none; font-weight:600;
+    }
+    .link:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="loginTitle">
+    <div class="brand">
+      <img src="{{ url_for('static', filename='logo_klein_2000.png') }}" alt="Company logo">
+      <h1 id="loginTitle">Sign in to Mc-Logistics</h1>
+    </div>
+    <p class="subtitle">MC Transport &amp; Logistics</p>
+
+    <form method="POST" action="{{ url_for('login') }}" novalidate>
+      {% if error %}
+      <div class="error" role="alert">{{ error }}</div>
+      {% endif %}
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" required autofocus
+               placeholder="e.g. rduytschaever" />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required
+               placeholder="Your password or pincode (mobile users)" />
+        <div class="hint">
+          <span>Mobile users can also use their pincode.</span>
+        
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Sign in</button>
+      </div>
+    </form>
+
+    <p class="footer">&copy; {{  now().year if false else '' }} MC Transport &amp; Logistics</p>
+  </main>
+</body>
+</html>
